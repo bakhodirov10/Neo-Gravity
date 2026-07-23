@@ -561,3 +561,5 @@ Devcontainers in `.devcontainer/` (default + `memory-stack` with Qdrant & Neo4j)
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE).
+#   N e o - G r a v i t y  
+ 
