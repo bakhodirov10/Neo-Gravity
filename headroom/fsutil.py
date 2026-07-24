@@ -43,7 +43,7 @@ def read_text(path: str | os.PathLike[str], *, default: object = _RAISE) -> str:
     """
     try:
         raw = Path(path).read_bytes()
-    except OSError:
+    except (OSError, TypeError, ValueError):
         if default is not _RAISE:
             return default  # type: ignore[return-value]
         raise

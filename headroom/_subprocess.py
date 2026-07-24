@@ -10,13 +10,21 @@ def _win32_pid_alive(pid: int) -> bool:
 
     kernel32 = ctypes.windll.kernel32  # type: ignore[attr-defined]
     PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+    STILL_ACTIVE = 259
     handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
     if handle:
-        kernel32.CloseHandle(handle)
-        return True
+        try:
+            exit_code = ctypes.c_ulong()
+            if kernel32.GetExitCodeProcess(handle, ctypes.byref(exit_code)):
+                return exit_code.value == STILL_ACTIVE
+            # GetExitCodeProcess failed — assume alive to be safe
+            return True
+        finally:
+            kernel32.CloseHandle(handle)
     ERROR_ACCESS_DENIED = 5
     # ctypes GetLastError() is Any; wrap so mypy sees bool (matches pid_alive below).
     return bool(kernel32.GetLastError() == ERROR_ACCESS_DENIED)
+
 
 
 def pid_alive(pid: int) -> bool:

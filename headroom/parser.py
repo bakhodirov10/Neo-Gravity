@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 HTML_TAG_PATTERN = re.compile(r"<[^>]+>")
 HTML_COMMENT_PATTERN = re.compile(r"<!--[\s\S]*?-->")
 BASE64_PATTERN = re.compile(r"[A-Za-z0-9+/]{50,}={0,2}")
-WHITESPACE_PATTERN = re.compile(r"[ \t]{4,}|\n{3,}")
+WHITESPACE_PATTERN = re.compile(r"[ \t]{4,}|(?:\r?\n){3,}")
 JSON_BLOCK_PATTERN = re.compile(r"\{[\s\S]{500,}\}")
 
 # Tool results below this size legitimately repeat ("ok", empty diffs,
@@ -178,9 +178,10 @@ def detect_waste_signals(text: str, tokenizer: Tokenizer) -> WasteSignals:
     # Excessive whitespace
     ws_matches = WHITESPACE_PATTERN.findall(text)
     if ws_matches:
-        # Count tokens that could be saved by normalizing whitespace to single spaces
+        # Count tokens saved by normalizing each match to a single space
         ws_text = "".join(ws_matches)
-        normalized_text = " ".join(ws_matches)
+        # Each excessive whitespace match normalizes to one space
+        normalized_text = " " * len(ws_matches)
         signals.whitespace_tokens = max(
             0, tokenizer.count_text(ws_text) - tokenizer.count_text(normalized_text)
         )

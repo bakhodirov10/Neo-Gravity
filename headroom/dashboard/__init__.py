@@ -16,3 +16,18 @@ def get_settings_html() -> str:
     """Load the settings GUI HTML template."""
     template_path = TEMPLATES_DIR / "settings.html"
     return template_path.read_text(encoding="utf-8")
+
+def get_analytics_html() -> str:
+    """Load the analytics GUI HTML template."""
+    template_path = TEMPLATES_DIR / "analytics.html"
+    return template_path.read_text(encoding="utf-8")
+
+def get_logs_html() -> str:
+    """Load the logs GUI HTML template."""
+    template_path = TEMPLATES_DIR / "logs.html"
+    return template_path.read_text(encoding="utf-8")
+
+def get_system_html() -> str:
+    """Load the system GUI HTML template."""
+    template_path = TEMPLATES_DIR / "system.html"
+    return template_path.read_text(encoding="utf-8")

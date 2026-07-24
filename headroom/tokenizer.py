@@ -32,14 +32,22 @@ class Tokenizer:
 
     def count_text(self, text: str) -> int:
         """Count tokens in text."""
+        if self._counter is None:
+            return max(1, len(text) // 4)  # rough char-based fallback
         return self._counter.count_text(text)
 
     def count_message(self, message: dict[str, Any]) -> int:
         """Count tokens in a message."""
+        if self._counter is None:
+            content = message.get("content", "")
+            text = content if isinstance(content, str) else str(content)
+            return max(1, len(text) // 4)
         return self._counter.count_message(message)
 
     def count_messages(self, messages: list[dict[str, Any]]) -> int:
         """Count tokens in a list of messages."""
+        if self._counter is None:
+            return sum(self.count_message(m) for m in messages)
         return self._counter.count_messages(messages)
 
     @property

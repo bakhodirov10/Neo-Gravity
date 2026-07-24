@@ -39,7 +39,7 @@ def fast_hash(data: str | bytes, length: int = 16) -> str:
     content-addressable lookups in compression caches, prefix tracking, etc.
     """
     if isinstance(data, str):
-        data = data.encode("utf-8")
+        data = data.encode("utf-8", errors="surrogatepass")
     return hashlib.md5(data).hexdigest()[:length]  # nosec B324
 
 
@@ -108,8 +108,9 @@ def format_timestamp(dt: datetime | None = None) -> str:
 
 def parse_timestamp(ts: str) -> datetime:
     """Parse ISO8601 timestamp string."""
-    # Handle both with and without Z suffix
-    ts = ts.rstrip("Z")
+    # Replace trailing Z with explicit UTC offset for timezone-aware parsing
+    if ts.endswith("Z"):
+        ts = ts[:-1] + "+00:00"
     return datetime.fromisoformat(ts)
 
 
@@ -124,7 +125,7 @@ def create_marker(marker_type: str, **kwargs: Any) -> str:
     Returns:
         Formatted marker string.
     """
-    attrs = " ".join(f'{k}="{v}"' for k, v in kwargs.items())
+    attrs = " ".join(f'{k}="{str(v).replace(chr(34), "&quot;")}"' for k, v in kwargs.items())
     if attrs:
         return f"{MARKER_PREFIX}{marker_type} {attrs}{MARKER_SUFFIX}"
     return f"{MARKER_PREFIX}{marker_type}{MARKER_SUFFIX}"

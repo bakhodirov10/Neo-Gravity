@@ -318,7 +318,8 @@ def proxy_pipeline_kwargs(config: object) -> dict[str, object]:
 
     target_ratio = getattr(config, "target_ratio", None)
     if target_ratio is not None:
-        kwargs["target_ratio"] = float(target_ratio)
+        val = float(target_ratio)
+        kwargs["target_ratio"] = max(0.01, min(1.0, round(val, 4)))
 
     min_tokens = getattr(config, "min_tokens_to_crush", None)
     if min_tokens is not None and (not profile_name or int(min_tokens) != 500):
@@ -345,7 +346,9 @@ def proxy_pipeline_kwargs(config: object) -> dict[str, object]:
     _min_chars_block = os.environ.get("HEADROOM_MIN_CHARS_FOR_BLOCK")
     if _min_chars_block:
         try:
-            kwargs["min_chars_for_block_compression"] = int(_min_chars_block)
+            val = int(_min_chars_block)
+            if val >= 0:
+                kwargs["min_chars_for_block_compression"] = val
         except ValueError:
             pass
 

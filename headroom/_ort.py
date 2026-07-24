@@ -49,6 +49,7 @@ _ENV_VAR = "ORT_DYLIB_PATH"
 # Tri-state module cache: unset sentinel / resolved path / None (no pin).
 _UNSET = object()
 _pinned: object = _UNSET
+_pinned_lock = __import__("threading").Lock()
 
 
 def ensure_ort_dylib_pinned() -> str | None:
@@ -61,8 +62,11 @@ def ensure_ort_dylib_pinned() -> str | None:
     global _pinned
     if _pinned is not _UNSET:
         return _pinned  # type: ignore[return-value]
-    _pinned = _resolve_and_pin()
-    return _pinned  # type: ignore[return-value]
+    with _pinned_lock:
+        if _pinned is not _UNSET:
+            return _pinned  # type: ignore[return-value]
+        _pinned = _resolve_and_pin()
+        return _pinned  # type: ignore[return-value]
 
 
 def _resolve_ort_native_library(capi_dir: Path) -> Path | None:

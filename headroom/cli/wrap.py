@@ -2975,6 +2975,10 @@ def _run_proxy_only_watcher(
     cleanup = _make_cleanup(proxy_holder, port_holder)
     signal.signal(signal.SIGINT, cleanup)
     signal.signal(signal.SIGTERM, cleanup)
+    if hasattr(signal, "SIGHUP"):
+        signal.signal(signal.SIGHUP, cleanup)
+    if hasattr(signal, "SIGBREAK"):
+        signal.signal(signal.SIGBREAK, cleanup)
 
     try:
         _print_wrap_banner(agent_label)
@@ -3459,7 +3463,11 @@ def _kill_proxy_by_pid(pid: int, port: int) -> bool:
     Returns True if the port is free afterwards, False otherwise.
     """
     try:
-        os.kill(pid, signal.SIGTERM)
+        if sys.platform == "win32":
+            _sig = getattr(signal, "CTRL_BREAK_EVENT", getattr(signal, "SIGBREAK", signal.SIGTERM))
+            os.kill(pid, _sig)
+        else:
+            os.kill(pid, signal.SIGTERM)
     except PermissionError:
         click.echo(f"  Warning: No permission to kill proxy PID {pid}")
         return False
@@ -3472,10 +3480,13 @@ def _kill_proxy_by_pid(pid: int, port: int) -> bool:
         if not _check_proxy(port):
             return True
 
-    # SIGTERM didn't work — escalate to SIGKILL (Unix) or terminate (Windows)
+    # SIGTERM didn't work — escalate to SIGKILL (Unix) or taskkill (Windows)
     try:
-        _kill_signal = getattr(signal, "SIGKILL", signal.SIGTERM)
-        os.kill(pid, _kill_signal)
+        if sys.platform == "win32":
+            subprocess.run(["taskkill", "/F", "/PID", str(pid)], capture_output=True, check=False)
+        else:
+            _kill_signal = getattr(signal, "SIGKILL", signal.SIGTERM)
+            os.kill(pid, _kill_signal)
     except (ProcessLookupError, PermissionError, OSError, SystemError):
         pass
 
@@ -4902,6 +4913,9 @@ def claude(
         # Terminal close / tmux kill-session sends SIGHUP, not SIGTERM — without
         # this, the finally block's base_url restore never runs (issue #1768).
         signal.signal(signal.SIGHUP, cleanup)
+    if hasattr(signal, "SIGBREAK"):
+        # Windows equivalent for console close / break
+        signal.signal(signal.SIGBREAK, cleanup)
 
     # Memory sync BEFORE proxy startup — sync headroom DB ↔ Claude's files
     if memory:

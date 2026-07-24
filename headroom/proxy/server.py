@@ -3450,9 +3450,38 @@ def create_app(config: ProxyConfig | None = None) -> FastAPI:
     )
     async def dashboard_settings():
         """Serve the Headroom settings GUI."""
-        from headroom.dashboard import get_settings_html
+        from headroom.dashboard import get_settings_html, get_analytics_html, get_logs_html, get_system_html
 
         return get_settings_html()
+
+    @app.get(
+        "/dashboard/analytics",
+        response_class=HTMLResponse,
+    )
+    async def dashboard_analytics():
+        """Serve the Headroom analytics GUI."""
+        from headroom.dashboard import get_analytics_html
+        return get_analytics_html()
+
+    @app.get(
+        "/dashboard/logs",
+        response_class=HTMLResponse,
+        dependencies=[Depends(_require_loopback)],
+    )
+    async def dashboard_logs():
+        """Serve the Headroom logs GUI."""
+        from headroom.dashboard import get_logs_html
+        return get_logs_html()
+
+    @app.get(
+        "/dashboard/system",
+        response_class=HTMLResponse,
+        dependencies=[Depends(_require_loopback)],
+    )
+    async def dashboard_system():
+        """Serve the Headroom system GUI."""
+        from headroom.dashboard import get_system_html
+        return get_system_html()
 
     @app.get("/favicon.ico")
     async def favicon() -> Response:

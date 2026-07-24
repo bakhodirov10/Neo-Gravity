@@ -325,7 +325,15 @@ class HeadroomClient:
             self._config.model_context_limits.update(model_context_limits)
 
         # Initialize storage
-        self._storage = create_storage(store_url)
+        self._storage = create_storage(self._store_url)
+        self._session_stats_lock = __import__("threading").Lock()
+        self._session_stats = {
+            "requests_total": 0,
+            "requests_optimized": 0,
+            "requests_audit": 0,
+            "tokens_saved_total": 0,
+            "cache_hits": 0,
+        }
 
         # Initialize transform pipeline
         self._pipeline = TransformPipeline(self._config, provider=self._provider)
@@ -456,6 +464,8 @@ class HeadroomClient:
                 model_limit=model_limit,
                 output_buffer=output_buffer,
                 tool_profiles=headroom_tool_profiles or {},
+                cache_prefix_tokens=headroom_cache_prefix_tokens,
+                keep_turns=headroom_keep_turns,
             )
 
             optimized_messages = result.messages
@@ -635,6 +645,9 @@ class HeadroomClient:
                 response=response,
                 metadata={"api_style": api_style, "stream": stream},
             )
+            if not stream:
+                self._storage.save(metrics)
+                self._store_response_in_semantic_cache(optimized_messages, response, model)
             return response
 
         except Exception as e:
@@ -993,15 +1006,8 @@ class HeadroomClient:
             stats = client.get_stats()
             print(f"Saved {stats['session']['tokens_saved_total']} tokens this session")
         """
-        # Initialize session stats if not present
-        if not hasattr(self, "_session_stats"):
-            self._session_stats = {
-                "requests_total": 0,
-                "requests_optimized": 0,
-                "requests_audit": 0,
-                "tokens_saved_total": 0,
-                "cache_hits": 0,
-            }
+        # Session stats are now initialized in __init__
+
 
         return {
             "session": dict(self._session_stats),
@@ -1025,22 +1031,14 @@ class HeadroomClient:
         cache_hit: bool = False,
     ) -> None:
         """Update in-memory session statistics."""
-        if not hasattr(self, "_session_stats"):
-            self._session_stats = {
-                "requests_total": 0,
-                "requests_optimized": 0,
-                "requests_audit": 0,
-                "tokens_saved_total": 0,
-                "cache_hits": 0,
-            }
+        with self._session_stats_lock:
+            self._session_stats["requests_total"] += 1
 
-        self._session_stats["requests_total"] += 1
+            if mode == HeadroomMode.OPTIMIZE:
+                self._session_stats["requests_optimized"] += 1
+                self._session_stats["tokens_saved_total"] += max(0, tokens_before - tokens_after)
+            else:
+                self._session_stats["requests_audit"] += 1
 
-        if mode == HeadroomMode.OPTIMIZE:
-            self._session_stats["requests_optimized"] += 1
-            self._session_stats["tokens_saved_total"] += max(0, tokens_before - tokens_after)
-        else:
-            self._session_stats["requests_audit"] += 1
-
-        if cache_hit:
-            self._session_stats["cache_hits"] += 1
+            if cache_hit:
+                self._session_stats["cache_hits"] += 1

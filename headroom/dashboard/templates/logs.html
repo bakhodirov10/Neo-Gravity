@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Gravity | Logs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { color-scheme: dark; }
+        body { background-color: #111827; color: #f3f4f6; }
+        .min-h-screen-3 { min-height: 300vh; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+    <!-- Navbar -->
+    <nav class="glass sticky top-0 z-50 w-full px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center space-x-4">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Neo-Gravity</h1>
+            <span class="text-sm font-medium text-gray-400 px-2 py-1 rounded bg-gray-800/50 border border-gray-700/50">Logs</span>
+        </div>
+        <div class="flex space-x-6 overflow-x-auto w-full sm:w-auto justify-center">
+            <a href="/dashboard" class="text-sm text-gray-400 hover:text-white transition-colors">Dashboard</a>
+            <a href="/dashboard/analytics" class="text-sm text-gray-400 hover:text-white transition-colors">Analytics</a>
+            <a href="/dashboard/logs" class="text-sm text-white font-medium hover:text-white transition-colors">Logs</a>
+            <a href="/dashboard/system" class="text-sm text-gray-400 hover:text-white transition-colors">System</a>
+            <a href="/dashboard/settings" class="text-sm text-gray-400 hover:text-white transition-colors">Settings</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen-3">
+        
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-light mb-2">System Logs</h2>
+                <p class="text-gray-400">Live streaming logs from the Neo-Gravity proxy server and subagents.</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm border border-gray-600 transition-colors">Export CSV</button>
+                <button class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm transition-colors">Stream: ON</button>
+            </div>
+        </div>
+
+        <div class="bg-[#0d1117] border border-gray-800 rounded-xl overflow-hidden shadow-2xl flex flex-col h-[280vh]">
+            <div class="bg-gray-900 px-4 py-3 border-b border-gray-800 flex flex-col sm:flex-row items-center gap-4 text-xs font-mono text-gray-400">
+                <div class="flex gap-1.5 self-start sm:self-center">
+                    <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-500/20 border border-amber-500/50"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                </div>
+                <div class="w-full sm:flex-1 px-4 py-1.5 bg-black/40 rounded border border-gray-800 flex items-center">
+                    <span class="text-gray-500 mr-2">Filter logs...</span>
+                </div>
+            </div>
+            <div class="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-hidden text-gray-300 flex-1 relative">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0d1117] pointer-events-none z-10 h-full"></div>
+    
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:00.000</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:01.013</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 3 entries, evicted 1.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:02.026</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (330ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:03.039</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:04.052</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1004 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:05.065</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 15 entries, evicted 0.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:06.078</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (390ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:07.091</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1007 processed successfully. Savings: 47%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:08.104</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1008 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:09.117</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 27 entries, evicted 4.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:10.130</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (450ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:11.143</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:12.156</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1012 processed successfully. Savings: 52%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:13.169</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 39 entries, evicted 3.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:14.182</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1014 processed successfully. Savings: 54%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:15.195</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:16.208</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1016 processed successfully. Savings: 56%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:17.221</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 51 entries, evicted 2.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:18.234</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (570ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:19.247</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:20.260</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1020 processed successfully. Savings: 40%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:21.273</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1021 processed successfully. Savings: 41%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:22.286</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (630ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:23.299</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:24.312</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1024 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:25.325</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:26.338</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (690ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:27.351</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:28.364</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1028 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:29.377</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 87 entries, evicted 4.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:30.390</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (750ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:31.403</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:32.416</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1032 processed successfully. Savings: 52%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:33.429</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 99 entries, evicted 3.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:34.442</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (810ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:35.455</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1035 processed successfully. Savings: 55%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:36.468</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1036 processed successfully. Savings: 56%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:37.481</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 111 entries, evicted 2.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:38.494</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (870ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:39.507</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:40.520</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1040 processed successfully. Savings: 40%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:41.533</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 123 entries, evicted 1.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:42.546</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1042 processed successfully. Savings: 42%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:43.559</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:44.572</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1044 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:45.585</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 135 entries, evicted 0.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:46.598</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (990ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:47.611</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:48.624</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1048 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:49.637</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1049 processed successfully. Savings: 49%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:50.650</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:51.663</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:52.676</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1052 processed successfully. Savings: 52%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:53.689</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 159 entries, evicted 3.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:54.702</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1110ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:55.715</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:56.728</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1056 processed successfully. Savings: 56%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:57.741</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 171 entries, evicted 2.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:58.754</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1170ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:59.767</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:00.780</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1060 processed successfully. Savings: 40%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:01.793</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 183 entries, evicted 1.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:02.806</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1230ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:03.819</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1063 processed successfully. Savings: 43%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:04.832</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1064 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:05.845</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 195 entries, evicted 0.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:06.858</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1290ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:07.871</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:08.884</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1068 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:09.897</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 207 entries, evicted 4.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:10.910</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1070 processed successfully. Savings: 50%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:11.923</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:12.936</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1072 processed successfully. Savings: 52%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:13.949</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 219 entries, evicted 3.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:14.962</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1410ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:15.975</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:16.988</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1076 processed successfully. Savings: 56%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:17.002</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1077 processed successfully. Savings: 57%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:18.015</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1470ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:19.028</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:20.041</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1080 processed successfully. Savings: 40%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:21.054</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 243 entries, evicted 1.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:22.067</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1530ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:23.080</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:24.093</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1084 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:25.106</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 255 entries, evicted 0.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:26.119</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1590ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:27.132</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:28.145</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1088 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:29.158</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 267 entries, evicted 4.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:30.171</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1650ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:31.184</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1091 processed successfully. Savings: 51%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:32.197</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1092 processed successfully. Savings: 52%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:33.210</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 279 entries, evicted 3.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:34.223</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1710ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:35.236</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:36.249</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1096 processed successfully. Savings: 56%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:37.262</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 291 entries, evicted 2.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:38.275</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1098 processed successfully. Savings: 58%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:39.288</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:40.301</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:41.314</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 303 entries, evicted 1.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:42.327</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1830ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:43.340</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:44.353</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1104 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:45.366</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1105 processed successfully. Savings: 45%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:46.379</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1890ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:47.392</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:48.405</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1108 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:49.418</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 327 entries, evicted 4.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:50.431</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (1950ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:51.444</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:52.457</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1112 processed successfully. Savings: 52%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:53.470</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 339 entries, evicted 3.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:54.483</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2010ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:55.496</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:56.509</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1116 processed successfully. Savings: 56%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:57.522</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 351 entries, evicted 2.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:58.535</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2070ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:59.548</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1119 processed successfully. Savings: 59%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:00.561</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1120 processed successfully. Savings: 40%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:01.574</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 363 entries, evicted 1.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:02.587</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2130ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:03.600</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:04.613</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1124 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:05.626</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:06.639</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1126 processed successfully. Savings: 46%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:07.652</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:08.665</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1128 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:09.678</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 387 entries, evicted 4.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:10.691</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2250ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:11.704</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:12.717</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1132 processed successfully. Savings: 52%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:13.730</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1133 processed successfully. Savings: 53%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:14.743</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2310ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:15.756</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 0/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:16.769</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1136 processed successfully. Savings: 56%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:17.782</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 411 entries, evicted 2.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:18.795</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2370ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:19.808</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 1/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:50:20.821</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1140 processed successfully. Savings: 40%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:51:21.834</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 423 entries, evicted 1.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:52:22.847</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2430ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:53:23.860</span>
+                    <span class="text-red-400 w-12 shrink-0 font-bold">ERROR</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Connection reset by peer. Failed to negotiate secure handshake. Retrying 2/3...</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:54:24.873</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1144 processed successfully. Savings: 44%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:55:25.886</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 435 entries, evicted 0.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:56:26.899</span>
+                    <span class="text-amber-400 w-12 shrink-0 font-bold">WARN</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">High latency detected on upstream provider API (2490ms). Re-routing recommended.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:57:27.912</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1147 processed successfully. Savings: 47%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:58:28.925</span>
+                    <span class="text-blue-400 w-12 shrink-0 font-bold">INFO</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Request 1148 processed successfully. Savings: 48%. Context aligned.</span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 hover:bg-white/5 px-2 py-2 -mx-2 rounded border-b border-gray-800/30 sm:border-0">
+                    <span class="text-gray-600 shrink-0">2026-07-24 16:59:29.938</span>
+                    <span class="text-gray-500 w-12 shrink-0 font-bold">DEBUG</span>
+                    <span class="text-gray-400 w-32 shrink-0 truncate hidden sm:inline-block">[headroom.proxy]</span>
+                    <span class="text-gray-200">Cache eviction check triggered. Evaluated 447 entries, evicted 4.</span>
+                </div>
+            </div>
+        </div>
+    
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20 py-8 text-center text-sm text-gray-500">
+        <p>Neo-Gravity Context Optimization Layer &copy; 2026</p>
+    </footer>
+</body>
+</html>

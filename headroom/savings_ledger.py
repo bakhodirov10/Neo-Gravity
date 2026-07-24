@@ -35,15 +35,38 @@ from headroom.proxy.savings_tracker import (
     sanitize_project_name,
 )
 
-# fcntl is Unix-only; on Windows we skip locking (append is still best-effort).
+# fcntl is Unix-only; on Windows we use msvcrt for file locking
+import sys
 fcntl: Any | None = None
-try:
-    import fcntl as _fcntl
+_HAS_FCNTL = False
+if sys.platform != "win32":
+    try:
+        import fcntl as _fcntl
+        fcntl = _fcntl
+        _HAS_FCNTL = True
+    except ImportError:
+        pass
 
-    fcntl = _fcntl
-    _HAS_FCNTL = True
-except ImportError:
-    _HAS_FCNTL = False
+def _lock_file(f: Any) -> None:
+    if _HAS_FCNTL and fcntl is not None:
+        fcntl.flock(f, fcntl.LOCK_EX)
+    elif sys.platform == "win32":
+        import msvcrt
+        pos = f.tell()
+        f.seek(0)
+        msvcrt.locking(f.fileno(), msvcrt.LK_LOCK, 1)
+        f.seek(pos)
+
+def _unlock_file(f: Any) -> None:
+    if _HAS_FCNTL and fcntl is not None:
+        fcntl.flock(f, fcntl.LOCK_UN)
+    elif sys.platform == "win32":
+        import msvcrt
+        pos = f.tell()
+        f.seek(0)
+        msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
+        f.seek(pos)
+
 
 SCHEMA_VERSION = 1
 UNKNOWN = "unknown"
@@ -171,13 +194,13 @@ def record_savings_event(
         target.parent.mkdir(parents=True, exist_ok=True)
         line = json.dumps(event, separators=(",", ":")) + "\n"
         with open(target, "a", encoding="utf-8") as handle:
-            if _HAS_FCNTL and fcntl is not None:
-                fcntl.flock(handle, fcntl.LOCK_EX)
+            _lock_file(handle)
             try:
                 handle.write(line)
+                handle.flush()
+                os.fsync(handle.fileno())
             finally:
-                if _HAS_FCNTL and fcntl is not None:
-                    fcntl.flock(handle, fcntl.LOCK_UN)
+                _unlock_file(handle)
     except Exception:
         return False
 
@@ -365,12 +388,14 @@ def _maybe_compact(target: Path) -> None:
     now = _utc_now()
     cutoff = now - timedelta(days=DEFAULT_RETENTION_DAYS)
     try:
+        import tempfile
+        import shutil
+        
+        kept: list[str] = []
+        # Acquire an exclusive lock on the original file to prevent appends while reading/replacing
         with open(target, "r+", encoding="utf-8") as handle:
-            if _HAS_FCNTL and fcntl is not None:
-                fcntl.flock(handle, fcntl.LOCK_EX)
+            _lock_file(handle)
             try:
-                kept: list[str] = []
-                handle.seek(0)
                 for raw in handle:
                     stripped = raw.strip()
                     if not stripped:
@@ -383,13 +408,32 @@ def _maybe_compact(target: Path) -> None:
                     if parsed is None or parsed < cutoff:
                         continue
                     kept.append(stripped)
-                handle.seek(0)
-                handle.truncate()
-                if kept:
-                    handle.write("\n".join(kept) + "\n")
+                
+                # Write to temp file and atomically replace
+                tmp = target.with_suffix(".tmp")
+                with open(tmp, "w", encoding="utf-8") as tmp_handle:
+                    if kept:
+                        tmp_handle.write("\n".join(kept) + "\n")
+                    tmp_handle.flush()
+                    os.fsync(tmp_handle.fileno())
+                
+                # Replace the original file
+                if sys.platform == "win32":
+                    import msvcrt
+                    # On Windows we can't replace an opened file, so we truncate in-place instead
+                    handle.seek(0)
+                    handle.truncate()
+                    if kept:
+                        handle.write("\n".join(kept) + "\n")
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                    tmp.unlink(missing_ok=True)
+                else:
+                    os.replace(tmp, target)
+                    
             finally:
-                if _HAS_FCNTL and fcntl is not None:
-                    fcntl.flock(handle, fcntl.LOCK_UN)
+                _unlock_file(handle)
+
     except Exception:
         return
 

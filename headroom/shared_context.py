@@ -108,26 +108,35 @@ class SharedContext:
         from headroom.compress import compress
 
         messages = [{"role": "tool", "content": content}]
-        result = compress(messages, model=self._model)
+        try:
+            result = compress(messages, model=self._model)
+            compressed = (
+                result.messages[0].get("content", content)
+                if result.messages
+                else content
+            )
+        except Exception:
+            logger.warning("SharedContext.put(%s): compression failed, storing raw", key)
+            compressed = content
+            result = None
 
-        compressed = result.messages[0].get("content", content)
         if not isinstance(compressed, str):
             import json
 
             compressed = json.dumps(compressed)
 
-        entry = ContextEntry(
-            key=key,
-            original=content,
-            compressed=compressed,
-            original_tokens=result.tokens_before,
-            compressed_tokens=result.tokens_after,
-            agent=agent,
-            timestamp=time.time(),
-            transforms=result.transforms_applied,
-        )
-
         with self._lock:
+            timestamp = time.time()
+            entry = ContextEntry(
+                key=key,
+                original=content,
+                compressed=compressed,
+                original_tokens=result.tokens_before if result else 0,
+                compressed_tokens=result.tokens_after if result else 0,
+                agent=agent,
+                timestamp=timestamp,
+                transforms=result.transforms_applied if result else [],
+            )
             self._evict_if_needed(incoming_key=key)
             self._entries[key] = entry
 
@@ -223,6 +232,6 @@ class SharedContext:
         if incoming_key is not None and incoming_key in self._entries:
             return
 
-        while len(self._entries) >= self._max_entries:
+        while len(self._entries) >= self._max_entries and self._entries:
             oldest_key = min(self._entries, key=lambda k: self._entries[k].timestamp)
             del self._entries[oldest_key]

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Gravity | Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { color-scheme: dark; }
+        body { background-color: #111827; color: #f3f4f6; }
+        .min-h-screen-3 { min-height: 300vh; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+    <!-- Navbar -->
+    <nav class="glass sticky top-0 z-50 w-full px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center space-x-4">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Neo-Gravity</h1>
+            <span class="text-sm font-medium text-gray-400 px-2 py-1 rounded bg-gray-800/50 border border-gray-700/50">Analytics</span>
+        </div>
+        <div class="flex space-x-6 overflow-x-auto w-full sm:w-auto justify-center">
+            <a href="/dashboard" class="text-sm text-gray-400 hover:text-white transition-colors">Dashboard</a>
+            <a href="/dashboard/analytics" class="text-sm text-white font-medium hover:text-white transition-colors">Analytics</a>
+            <a href="/dashboard/logs" class="text-sm text-gray-400 hover:text-white transition-colors">Logs</a>
+            <a href="/dashboard/system" class="text-sm text-gray-400 hover:text-white transition-colors">System</a>
+            <a href="/dashboard/settings" class="text-sm text-gray-400 hover:text-white transition-colors">Settings</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen-3">
+        
+        <div class="mb-12">
+            <h2 class="text-3xl font-light mb-4">Analytics Dashboard</h2>
+            <p class="text-gray-400 max-w-3xl leading-relaxed">Comprehensive breakdown of context optimization performance, token savings, and request routing across all connected models and agents.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div class="bg-gray-800/30 border border-gray-700/50 rounded-xl p-6 hover:border-cyan-500/30 transition-colors">
+                <h3 class="text-sm font-medium text-gray-400 mb-2">Total Savings</h3>
+                <p class="text-4xl font-light text-white mb-2">1.2M <span class="text-lg text-cyan-400">tokens</span></p>
+                <div class="w-full bg-gray-700/50 rounded-full h-1.5"><div class="bg-cyan-500 h-1.5 rounded-full" style="width: 75%"></div></div>
+            </div>
+            <div class="bg-gray-800/30 border border-gray-700/50 rounded-xl p-6 hover:border-emerald-500/30 transition-colors">
+                <h3 class="text-sm font-medium text-gray-400 mb-2">Cost Avoided</h3>
+                <p class="text-4xl font-light text-white mb-2"><span class="text-lg text-gray-500">$</span> 3,450</p>
+                <div class="w-full bg-gray-700/50 rounded-full h-1.5"><div class="bg-emerald-500 h-1.5 rounded-full" style="width: 60%"></div></div>
+            </div>
+            <div class="bg-gray-800/30 border border-gray-700/50 rounded-xl p-6 hover:border-purple-500/30 transition-colors">
+                <h3 class="text-sm font-medium text-gray-400 mb-2">Cache Hits</h3>
+                <p class="text-4xl font-light text-white mb-2">45.2 <span class="text-lg text-purple-400">%</span></p>
+                <div class="w-full bg-gray-700/50 rounded-full h-1.5"><div class="bg-purple-500 h-1.5 rounded-full" style="width: 45%"></div></div>
+            </div>
+            <div class="bg-gray-800/30 border border-gray-700/50 rounded-xl p-6 hover:border-amber-500/30 transition-colors">
+                <h3 class="text-sm font-medium text-gray-400 mb-2">Avg Latency</h3>
+                <p class="text-4xl font-light text-white mb-2">124 <span class="text-lg text-amber-400">ms</span></p>
+                <div class="w-full bg-gray-700/50 rounded-full h-1.5"><div class="bg-amber-500 h-1.5 rounded-full" style="width: 25%"></div></div>
+            </div>
+        </div>
+
+        <div class="space-y-12">
+            <!-- Simulated multiple screens of charts and data -->
+            <div class="bg-gray-800/20 border border-gray-700/30 rounded-2xl p-8 h-[600px] flex items-center justify-center flex-col">
+                <h3 class="text-xl font-medium text-gray-300 mb-6 w-full">Token Compression Trends (30 Days)</h3>
+                <div class="flex-1 w-full border border-dashed border-gray-700/50 rounded-xl flex items-center justify-center bg-gray-900/20">
+                    <span class="text-gray-500 text-sm">[ Interactive Area Chart Placeholder ]</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-gray-800/20 border border-gray-700/30 rounded-2xl p-8 h-[500px] flex flex-col">
+                    <h3 class="text-xl font-medium text-gray-300 mb-6">Model Distribution</h3>
+                    <div class="flex-1 border border-dashed border-gray-700/50 rounded-xl flex items-center justify-center bg-gray-900/20">
+                        <span class="text-gray-500 text-sm">[ Donut Chart Placeholder ]</span>
+                    </div>
+                </div>
+                <div class="bg-gray-800/20 border border-gray-700/30 rounded-2xl p-8 h-[500px] flex flex-col">
+                    <h3 class="text-xl font-medium text-gray-300 mb-6">Agent Efficiency</h3>
+                    <div class="flex-1 border border-dashed border-gray-700/50 rounded-xl flex items-center justify-center bg-gray-900/20">
+                        <span class="text-gray-500 text-sm">[ Radar Chart Placeholder ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800/20 border border-gray-700/30 rounded-2xl p-8 min-h-[800px] flex flex-col">
+                <h3 class="text-xl font-medium text-gray-300 mb-6">Detailed Request Log</h3>
+                <div class="overflow-x-auto border border-gray-700/50 rounded-xl">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-gray-800/50 text-gray-300 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-4 border-b border-gray-700">Timestamp</th>
+                                <th class="px-6 py-4 border-b border-gray-700">Model</th>
+                                <th class="px-6 py-4 border-b border-gray-700">Tokens Before</th>
+                                <th class="px-6 py-4 border-b border-gray-700">Tokens After</th>
+                                <th class="px-6 py-4 border-b border-gray-700">Savings</th>
+                                <th class="px-6 py-4 border-b border-gray-700">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700/50">
+    
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:00:00</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45000</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12000</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">73%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:02:01</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45120</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12045</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">72%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:04:02</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45240</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12090</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">71%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:06:03</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45360</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12135</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">70%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:08:04</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45480</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12180</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">69%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:10:05</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45600</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12225</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">73%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:12:06</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45720</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12270</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">72%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:14:07</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45840</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12315</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">71%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:16:08</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">45960</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12360</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">70%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:18:09</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46080</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12405</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">69%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:20:10</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46200</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12450</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">73%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:22:11</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46320</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12495</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">72%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:24:12</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46440</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12540</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">71%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:26:13</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46560</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12585</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">70%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:28:14</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46680</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12630</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">69%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:30:15</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46800</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12675</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">73%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:32:16</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">46920</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12720</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">72%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:34:17</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47040</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12765</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">71%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:36:18</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47160</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12810</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">70%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:38:19</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47280</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12855</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">69%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:40:20</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47400</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12900</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">73%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:42:21</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47520</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12945</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">72%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:44:22</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47640</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">12990</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">71%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:46:23</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47760</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">13035</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">70%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:48:24</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">47880</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">13080</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">69%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:50:25</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">48000</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">13125</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">73%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:52:26</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">48120</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">13170</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">72%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:54:27</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">48240</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">13215</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">71%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:56:28</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">48360</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">13260</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">70%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                            <tr class="hover:bg-gray-700/20 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">2026-07-24 10:58:29</td>
+                                <td class="px-6 py-4">claude-3-5-sonnet</td>
+                                <td class="px-6 py-4 font-mono text-gray-300">48480</td>
+                                <td class="px-6 py-4 font-mono text-emerald-400">13305</td>
+                                <td class="px-6 py-4 font-medium text-emerald-500">69%</td>
+                                <td class="px-6 py-4"><span class="px-2 py-1 text-xs rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Optimized</span></td>
+                            </tr>
+        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="bg-gray-800/20 border border-gray-700/30 rounded-2xl p-8 h-[600px] flex items-center justify-center flex-col">
+                <h3 class="text-xl font-medium text-gray-300 mb-6 w-full">Cost Projection (Next 30 Days)</h3>
+                <div class="flex-1 w-full border border-dashed border-gray-700/50 rounded-xl flex items-center justify-center bg-gray-900/20">
+                    <span class="text-gray-500 text-sm">[ Predictive Bar Chart Placeholder ]</span>
+                </div>
+            </div>
+        </div>
+    
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-20 py-8 text-center text-sm text-gray-500">
+        <p>Neo-Gravity Context Optimization Layer &copy; 2026</p>
+    </footer>
+</body>
+</html>

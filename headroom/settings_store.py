@@ -836,6 +836,7 @@ def _atomic_write_text(path: Path, data: str) -> None:
     startup apply hook) crash-loop a supervised proxy. ``load()`` is also
     fail-open as a second line of defence.
     """
+    path.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp_name = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp")
     tmp_path = Path(tmp_name)
     try:
@@ -843,11 +844,21 @@ def _atomic_write_text(path: Path, data: str) -> None:
             handle.write(data)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(tmp_path, path)
+        import sys
+        if sys.platform == "win32":
+            try:
+                os.replace(tmp_path, path)
+            except OSError:
+                with open(path, "w", encoding="utf-8") as f:
+                    f.write(data)
+                    f.flush()
+                    os.fsync(f.fileno())
+                tmp_path.unlink(missing_ok=True)
+        else:
+            os.replace(tmp_path, path)
     except BaseException:
         tmp_path.unlink(missing_ok=True)
         raise
-
 
 def save(values: dict[str, Any]) -> None:
     """Validate ``values`` and merge them into the existing stored settings.
@@ -933,6 +944,19 @@ def to_schema() -> dict[str, Any]:
     effective = effective_values(stored)
     fields: list[dict[str, Any]] = []
     for field in SETTINGS:
+        value = effective.get(field.key)
+        stored_value = stored.get(field.key)
+        
+        if field.type == "csv-list":
+            if isinstance(value, str):
+                value = [x.strip() for x in value.split(",") if x.strip()]
+            elif value is None:
+                value = []
+            if isinstance(stored_value, str):
+                stored_value = [x.strip() for x in stored_value.split(",") if x.strip()]
+            elif stored_value is None:
+                stored_value = []
+                
         fields.append(
             {
                 "key": field.key,
@@ -949,8 +973,8 @@ def to_schema() -> dict[str, Any]:
                 "maximum": field.maximum,
                 "tier": field.tier,
                 "env_override": bool(os.environ.get(field.env)),
-                "value": _mask(field, effective.get(field.key)),
-                "stored": _mask(field, stored.get(field.key)),
+                "value": _mask(field, value),
+                "stored": _mask(field, stored_value),
             }
         )
     groups: list[str] = []

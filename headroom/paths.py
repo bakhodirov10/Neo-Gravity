@@ -185,7 +185,14 @@ def ensure_workspace_dir() -> Path:
     """Return :func:`workspace_dir`, creating it if it does not yet exist."""
 
     path = workspace_dir()
-    path.mkdir(parents=True, exist_ok=True)
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+    except (OSError, PermissionError):
+        import logging
+
+        logging.getLogger(__name__).warning(
+            "Cannot create workspace directory %s; using as-is", path
+        )
     return path
 
 
@@ -193,7 +200,14 @@ def ensure_config_dir() -> Path:
     """Return :func:`config_dir`, creating it if it does not yet exist."""
 
     path = config_dir()
-    path.mkdir(parents=True, exist_ok=True)
+    try:
+        path.mkdir(parents=True, exist_ok=True)
+    except (OSError, PermissionError):
+        import logging
+
+        logging.getLogger(__name__).warning(
+            "Cannot create config directory %s; using as-is", path
+        )
     return path
 
 
@@ -393,12 +407,20 @@ def _validate_plugin_name(plugin_name: str) -> None:
     rejected because it terminates paths on POSIX APIs.
     """
 
+    # Windows reserved device names cause OS-level filesystem failures
+    _WIN_RESERVED = {
+        "CON", "PRN", "AUX", "NUL",
+        *(f"COM{i}" for i in range(1, 10)),
+        *(f"LPT{i}" for i in range(1, 10)),
+    }
+
     if (
         not plugin_name
         or plugin_name in {".", ".."}
         or "/" in plugin_name
         or "\\" in plugin_name
         or "\x00" in plugin_name
+        or plugin_name.upper().split(".")[0] in _WIN_RESERVED
     ):
         raise ValueError(f"invalid plugin name: {plugin_name!r}")
 
