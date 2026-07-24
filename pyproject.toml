@@ -79,13 +79,16 @@ proxy = [
     "httpx[http2]>=0.24.0",
     "openai>=2.14.0",             # OpenAI API format support
     "mcp>=1.28.1",                 # MCP server (headroom_compress, retrieve, stats)
-    "magika>=0.6.0",              # ML content detection for ContentRouter
     "zstandard>=0.20.0",          # Decompress zstd request bodies (Codex, etc.)
     "websockets>=13.0",           # WebSocket proxy for /v1/responses (Codex gpt-5.4+)
-    "onnxruntime>=1.16.0",        # Kompress ONNX INT8 text compression (no torch needed)
-    "transformers>=5.5.0,<6.0",   # Tokenizer only (for Kompress)
     "watchdog>=4.0.0",            # File watcher for live code graph reindexing (--code-graph)
     "sqlite-vec>=0.1.6",          # Vector index for memory (--memory). Lightweight, no torch.
+]
+# Heavy ML dependencies for advanced compression and detection
+proxy-ml = [
+    "magika>=0.6.0",              # ML content detection for ContentRouter
+    "onnxruntime>=1.16.0",        # Kompress ONNX INT8 text compression (no torch needed)
+    "transformers>=5.5.0,<6.0",   # Tokenizer only (for Kompress)
 ]
 # Production ASGI/WSGI server — Unix-only (gunicorn does not support Windows).
 # Kept separate from [proxy] so that dev, CI, and Windows users are not forced
